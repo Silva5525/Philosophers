@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:13:48 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/05/17 22:01:17 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/05/21 14:18:00 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@
 # include <stdint.h>
 # include "get_next_line.h"
 
+/// @brief coordinations struct for ft_fill.c 
+typedef struct s_xy
+{
+	int		x;
+	int		y;
+}			t_xy;
+
+/// @brief linked list struct for all ft_lst*.c
 typedef struct s_list
 {
 	void			*content;
@@ -84,6 +92,7 @@ void	ft_lstiter_ptr(t_list *lst, void (*f)(void *, void *), void *ptr);
 t_list	*ft_lstget(t_list *lst, int index);
 ssize_t	ft_strcwords(char *str, char delimeter);
 ssize_t	ft_ato_ssize_t(const char *str);
+void 	ft_fill(char **tab, t_xy size, t_xy begin);
 
 ssize_t	ft_write(int fd, const void *buf, size_t count);
 
