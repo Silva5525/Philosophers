@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 19:41:01 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/05/21 14:15:58 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/05/21 14:25:41 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void flood_l(char **tab, t_xy size, int x, int y, char target)
 	flood_l(tab, size, x, y - 1, target);
 }
 
-void flood_fill(char **tab, t_xy size, t_xy begin)
+void ft_fill(char **tab, t_xy size, t_xy begin)
 {
 	char target;
 
