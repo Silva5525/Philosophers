@@ -6,15 +6,15 @@
 #    By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 16:56:06 by wdegraf           #+#    #+#              #
-#    Updated: 2024/05/19 17:10:58 by wdegraf          ###   ########.fr        #
+#    Updated: 2024/06/03 19:50:39 by wdegraf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:= philo
 CC		:= cc
-CFLAGS	:= -Wall -Werror -Wextra -g -Wunreachable-code 
-#-g -fsanitize=address -Ofast 
-# valgrind --leak-check=full ./meinProgramm
+CFLAGS	:= -Wall -Werror -Wextra -lpthread -g -Wunreachable-code 
+#-fsanitize=address -Ofast 
+# valgrind --leak-check=full 
 
 LIBFT	:= ./libft
 
