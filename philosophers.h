@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/03 20:02:32 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/05 17:18:36 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread;
+	
+}	t_p;
 
-}	t_philo;
+int		ft_atoi(const char *str);
 
 #endif
