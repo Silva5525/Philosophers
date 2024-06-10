@@ -6,12 +6,18 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/10 15:53:45 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/10 17:25:40 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/// @brief inits all values of the table struct. This struct holds
+/// all the values which all Philosophers have in common.
+/// @param table the table struct.
+/// @param argc argument count
+/// @param argv argumment valuess
+/// @return 1 if an error occured. 0 if everything is fine.
 int	init_table(t_ta table, int argc, char **argv)
 {
 	if (ft_isdigit(argv[1]) || ft_atoi(argv[1]) < 1)
@@ -34,9 +40,9 @@ int	init_table(t_ta table, int argc, char **argv)
 	}
 	else
 		table.times_has_to_eat = -42;
-	printf("tesst\n");
+	table.table_time = mili_count();
+	printf("time in ms %ld\n", table.table_time);
 	return 0;
-		
 }
 
 int	main(int argc, char **argv)
@@ -48,6 +54,8 @@ int	main(int argc, char **argv)
 	{
 		if (init_table(table, argc, argv) == 1)
 			return (1);
+		// if (init_philo() == 1)
+			// return (1);
 	}
 	return (0);
 }

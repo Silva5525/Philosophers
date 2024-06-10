@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/10 15:39:44 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/10 17:25:40 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,18 @@ int	ft_isdigit(char *d)
 		if (!(*d >= '0' && *d <= '9'))
 			return (0);
 	return (1);
+}
+
+/// @brief  uses gettimeofday to get the actual time in miliseconds.
+/// Which means how many miliseconds have passed since start of 1970.
+/// @param clock struct timeval for holding the actual time.
+/// @return miliseconds passed since 1970.
+size_t mili_count(void)
+{
+	struct timeval	clock;
+	size_t			miliseconds;
+	
+	gettimeofday(&clock, NULL);
+	miliseconds = (clock.tv_sec * 1000) + (clock.tv_usec / 1000);
+	return (miliseconds);
 }
