@@ -6,22 +6,22 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/05 20:06:54 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/10 09:41:59 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int count(void *id)
+void *count(void *p)
 {
-	int i;
-	int hold = (int)(long)id;
-	i = 0;
-	printf("[%d]philo says: %d\n", hold, hold);
-	i++;
-	id = (void *)(i + hold);
-	pthread_exit (id);
-}	
+	t_p *philo = (t_p *)p;
+	int *hold = malloc(sizeof(int));
+	if (!hold)
+		return (NULL);
+	*hold = philo->id + philo->all;
+	printf("[%d]philo says: %d\n", philo->id, philo->all);
+	return ((void*)hold);
+}
 
 int	main(int argc, char **argv)
 {
@@ -39,23 +39,38 @@ int	main(int argc, char **argv)
 			return (-1);
 		while (i > j)
 		{
+			pthread_mutex_init(&philo[j].mutex, NULL);
 			philo[j].id = j;
-			if (pthread_create(&philo[j].thread, NULL, &count, (void *)(long)philo[j].id) != 0)
+			philo[j].all = i;
+			if (pthread_create(&philo[j].thread, NULL, &count, &philo[j]) != 0)
+			{
+				free(philo);
 				return (-1);
+			}
 			j++;
+		}
+		j = 0;
+		int sum = 0;
+		while (i > j)
+		{
+			int *hold;
+			if (pthread_join(philo[j].thread, (void **)&hold) != 0)
+			{
+				free(philo);
+				return (-1);
+			}
+			j++;
+			printf("[%d]philo says second time: %d\n", j, sum);
+			sum += *hold;
+			free(hold);
 		}
 		j = 0;
 		while (i > j)
 		{
-			pthread_join(philo[j].thread, NULL);
-			j++;
-		}
-		j = 0;
-		while (i > j)
-		{
-			printf("[%d]philo says this time: %d\n", j, philo[j].id);
+			printf("[%d]philo says this time: %d\n", j, sum);
 			j++;
 		}
 	}
+	free(philo);
 	return (0);
 }
