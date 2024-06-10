@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/06 17:22:58 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/10 15:30:47 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,20 @@ typedef struct s_philo
 	int				all;
 	pthread_t		thread;
 	pthread_mutex_t mutex;
-	
-	
 }	t_p;
 
+typedef struct s_table
+{
+	int				number_of_philosophers;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				times_has_to_eat;
+	// pthread_mutex_t	fork;
+}	t_ta;
+
+//////////////////// utils.c ////////////////////
 int		ft_atoi(const char *str);
+int		ft_isdigit(char *d);
 
 #endif
