@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/12 18:20:56 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/12 19:39:56 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <sys/time.h>
-
-/// @brief s_philo holds all the values which are unique to each Philosopher.
-/// @param id the id of the Philosopher.
-
-typedef struct s_philosopher
-{
-	int				id;
-	int				r_hand;
-	int				l_hand;
-	pthread_t		live;
-	t_ta			*table;
-	
-}	t_p;
 
 /// @brief s_table holds all the values which all Philosophers
 /// have in common. And represents the world in which the Philosophers
@@ -55,6 +42,19 @@ typedef struct s_table
 	size_t			table_time;
 }	t_ta;
 
+/// @brief s_philo holds all the values which are unique to each Philosopher.
+/// @param id the ident-number of the Philosopher.
+
+typedef struct s_philosopher
+{
+	int				id;
+	int				r_hand;
+	int				l_hand;
+	pthread_t		live;
+	t_ta			*table;
+	
+}	t_p;
+
 //////////////////// utils.c ////////////////////
 int		ft_atoi(const char *str);
 int		ft_isdigit(char *d);
@@ -63,7 +63,7 @@ void	free_destroy(t_p *philo);
 
 //////////////////// routines.c ////////////////////
 
-void be_alive(t_p *link);
+void	*be_alive(void *link);
 
 #endif
 
@@ -73,6 +73,8 @@ void be_alive(t_p *link);
 // ◦ timestamp_in_ms X is sleeping
 // ◦ timestamp_in_ms X is thinking
 // ◦ timestamp_in_ms X died
+
+// ./philo 5 800 200 200 10 actual problem only 4 philos are alive
 
 /// To do .. start threats for each philo. For evry second philo
 /// the first philo has to wait for the second philo to start.
