@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/12 19:39:18 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/12 19:41:40 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ int	main(int argc, char **argv)
 		if (init_philo(philo, &table) == 1)
 			return (1);
 		i = -1;
-		while (++i < table.number_of_philosophers)
+		while (++i <= table.number_of_philosophers)
 			if (pthread_create(&philo[i].live, NULL, be_alive, &philo[i]) != 0)
 				return (free_destroy(philo), 1);
 		// i = -1;
-		// while (++i < table->number_of_philosophers)
+		// while (++i <= table->number_of_philosophers)
 		// 	if (pthread_join(&philo[i].live, ) != 0)
 		// 		return (free_destroy(philo), 1);
 		free_destroy(philo);
