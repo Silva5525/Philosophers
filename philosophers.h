@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/10 17:25:40 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/12 13:17:30 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,25 @@
 # include <unistd.h>
 # include <sys/time.h>
 
+/// @brief s_philo holds all the values which are unique to each Philosopher.
+/// @param id the id of the Philosopher.
+
 typedef struct s_philo
 {
 	int				id;
-	int				all;
-	pthread_t		thread;
-	pthread_mutex_t mutex;
+	pthread_t		live;
+	t_ta			*table;
 }	t_p;
 
+/// @brief s_table holds all the values which all Philosophers
+/// have in common. And represents the world in which the Philosophers
+/// are simulated.
+/// @param number_of_philosophers the number of Philosophers.
+/// @param time_to_die the time in ms after a Philosopher dies.
+/// @param time_to_eat the time in ms a Philosopher needs to eat.
+/// @param time_to_sleep the time in ms a Philosopher needs to sleep.
+/// @param times_has_to_eat the number of times a Philosopher has to eat.
+/// @param table_time the time in ms when the simulation started.
 typedef struct s_table
 {
 	int				number_of_philosophers;
@@ -36,6 +47,7 @@ typedef struct s_table
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				times_has_to_eat;
+	bool			someoene_death;
 	size_t			table_time;
 	// pthread_mutex_t	fork;
 }	t_ta;

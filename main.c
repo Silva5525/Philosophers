@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/10 17:25:40 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/12 13:17:38 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /// @param argc argument count
 /// @param argv argumment valuess
 /// @return 1 if an error occured. 0 if everything is fine.
-int	init_table(t_ta table, int argc, char **argv)
+static int	init_table(t_ta table, int argc, char **argv)
 {
 	if (ft_isdigit(argv[1]) || ft_atoi(argv[1]) < 1)
 		return (write(2 , "Error: argv[1] = no positive number.\n", 38), 1);
@@ -41,8 +41,27 @@ int	init_table(t_ta table, int argc, char **argv)
 	else
 		table.times_has_to_eat = -42;
 	table.table_time = mili_count();
+	table.someoene_death = false;
 	printf("time in ms %ld\n", table.table_time);
 	return 0;
+}
+
+static int init_philo(t_p *philo, t_ta table)
+{
+	int i;
+
+	i = 0;
+	philo = (t_p *)malloc(sizeof(t_p) * table.number_of_philosophers);
+	if (!philo)
+		return (write(2, "Error: malloc philo failed.\n", 29), 1);
+	while (i < table.number_of_philosophers)
+	{
+		
+		philo[i].id = i;
+		philo[i].table = &table;
+		i++;
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -54,8 +73,8 @@ int	main(int argc, char **argv)
 	{
 		if (init_table(table, argc, argv) == 1)
 			return (1);
-		// if (init_philo() == 1)
-			// return (1);
+		if (init_philo(philo, table) == 1)
+			return (1);
 	}
 	return (0);
 }
