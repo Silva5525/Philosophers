@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/10 17:25:40 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/12 18:20:43 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ size_t mili_count(void)
 	size_t			miliseconds;
 	
 	gettimeofday(&clock, NULL);
-	miliseconds = (clock.tv_sec * 1000) + (clock.tv_usec / 1000);
+	miliseconds = (clock.tv_usec / 1000) + (clock.tv_sec * 1000);
 	return (miliseconds);
+}
+
+void	free_destroy(t_p *philo)
+{
+	int i;
+
+	i = 0;
+	while (i < philo->table->number_of_philosophers)
+	{
+		pthread_mutex_destroy(&philo->table->forks[i]);
+		i++;
+	}
+	free(philo->table->forks);
+	free(philo);
 }

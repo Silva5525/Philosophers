@@ -6,11 +6,28 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/12 13:17:38 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/12 18:20:33 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+int manifest_forks(t_ta table)
+{
+	int i;
+
+	i = 0;
+	table.forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table.number_of_philosophers);
+	if (!table.forks)
+		return (write(2, "Error: malloc forks failed.\n", 29), 1);
+	while (i < table.number_of_philosophers)
+	{
+		if (pthread_mutex_init(&table.forks[i], NULL) != 0)
+			return (write(2, "Error: mutex init forks failed.\n", 33), 1);
+		i++;
+	}
+	return (0);
+}
 
 /// @brief inits all values of the table struct. This struct holds
 /// all the values which all Philosophers have in common.
@@ -61,6 +78,8 @@ static int init_philo(t_p *philo, t_ta table)
 		philo[i].table = &table;
 		i++;
 	}
+	if (manifest_forks(table) == 1)
+		return (1);
 	return (0);
 }
 
@@ -68,6 +87,7 @@ int	main(int argc, char **argv)
 {
 	t_p		*philo;
 	t_ta	table;
+	int		i;
 
 	if (argc == 5 || argc == 6)
 	{
@@ -75,6 +95,14 @@ int	main(int argc, char **argv)
 			return (1);
 		if (init_philo(philo, table) == 1)
 			return (1);
+		i = -1;
+		while (++i < table.number_of_philosophers)
+			if (pthread_create(&philo[i].live, NULL, &be_alive, &philo[i]) != 0)
+				return (free_destroy(philo), 1);
+		// i = -1;
+		// while (++i < table.number_of_philosophers)
+		// 	if (pthread_join(&philo[i].live, ) != 0)
+		// 		return (free_destroy(philo), 1);
 	}
 	return (0);
 }

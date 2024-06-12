@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/12 13:17:30 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/12 18:20:56 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@
 /// @brief s_philo holds all the values which are unique to each Philosopher.
 /// @param id the id of the Philosopher.
 
-typedef struct s_philo
+typedef struct s_philosopher
 {
 	int				id;
+	int				r_hand;
+	int				l_hand;
 	pthread_t		live;
 	t_ta			*table;
+	
 }	t_p;
 
 /// @brief s_table holds all the values which all Philosophers
@@ -43,18 +46,48 @@ typedef struct s_philo
 typedef struct s_table
 {
 	int				number_of_philosophers;
+	pthread_mutex_t	*forks;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				times_has_to_eat;
 	bool			someoene_death;
 	size_t			table_time;
-	// pthread_mutex_t	fork;
 }	t_ta;
 
 //////////////////// utils.c ////////////////////
 int		ft_atoi(const char *str);
 int		ft_isdigit(char *d);
 size_t	mili_count(void);
+void	free_destroy(t_p *philo);
+
+//////////////////// routines.c ////////////////////
+
+void be_alive(t_p *link);
 
 #endif
+
+// Any state change of a philosopher must be formatted as follows:
+// ◦ timestamp_in_ms X has taken a fork
+// ◦ timestamp_in_ms X is eating
+// ◦ timestamp_in_ms X is sleeping
+// ◦ timestamp_in_ms X is thinking
+// ◦ timestamp_in_ms X died
+
+/// To do .. start threats for each philo. For evry second philo
+/// the first philo has to wait for the second philo to start.
+/// or the uneven philos take the right fork first and the even
+/// philos take the left fork first. so the first philo has to wait...
+/// for the last philo to start. 
+/// each fork represents a mutex. so i need a mutex for each hand of 
+/// each philo. print the message "id philo has taken a fork"..
+
+/// so i forker which takes t_p and t_ta as arguments. should decide if
+/// the philo is even or uneven. and then mutex the correct hand.
+/// print first msg. then the second hand should take a fork. print msg.
+/// then the print msg should say he eats, then pause the programm 
+/// while eating.count the meal and the time when he has eaten.
+/// unlock both threats. then make one program for sleeping and one
+/// for thinking. both nead to print the message and count the needet time for that.
+/// then the main program should check if the philo
+/// has eaten enough. if not he should start again. if he has eaten
