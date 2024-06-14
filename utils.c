@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/12 18:20:43 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 13:51:01 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_atoi(const char *str)
 {
 	ssize_t n;
 	ssize_t minus;
-	
+
 	if (!str)
 		return (0);
 	n = 0;

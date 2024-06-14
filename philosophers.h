@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/12 19:39:56 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 13:50:22 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ typedef struct s_philosopher
 	int				l_hand;
 	pthread_t		live;
 	t_ta			*table;
-	
 }	t_p;
 
 //////////////////// utils.c ////////////////////

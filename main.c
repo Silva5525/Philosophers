@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/12 19:41:40 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 13:50:09 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int manifest_forks(t_ta *table)
 	int i;
 
 	i = 0;
-	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->number_of_philosophers);
+	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* table->number_of_philosophers);
 	if (!table->forks)
 		return (write(2, "Error: malloc forks failed.\n", 29), 1);
 	while (i < table->number_of_philosophers)
@@ -38,21 +39,21 @@ int manifest_forks(t_ta *table)
 static int	init_table(t_ta *table, int argc, char **argv)
 {
 	if (ft_isdigit(argv[1]) || ft_atoi(argv[1]) < 1)
-		return (write(2 , "Error: argv[1] = no positive number.\n", 38), 1);
+		return (write(2, "Error: argv[1] = no positive number.\n", 38), 1);
 	table->number_of_philosophers = ft_atoi(argv[1]);
 	if (ft_isdigit(argv[2]) || ft_atoi(argv[2]) < 1)
-		return (write(2 , "Error: argv[2] = no positive number.\n", 38), 1);
+		return (write(2, "Error: argv[2] = no positive number.\n", 38), 1);
 	table->time_to_die = ft_atoi(argv[2]);
 	if (ft_isdigit(argv[3]) || ft_atoi(argv[3]) < 1)
-		return (write(2 , "Error: argv[3] = no positive number.\n", 38), 1);
+		return (write(2, "Error: argv[3] = no positive number.\n", 38), 1);
 	table->time_to_eat = ft_atoi(argv[3]);
 	if (ft_isdigit(argv[4]) || ft_atoi(argv[4]) < 1)
-		return (write(2 , "Error: argv[4] = no positive number.\n", 38), 1);
+		return (write(2, "Error: argv[4] = no positive number.\n", 38), 1);
 	table->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 	{
 		if (ft_isdigit(argv[5]) || ft_atoi(argv[5]) < 1)
-			return (write(2 , "Error: argv[5] = no positive number.\n", 38), 1);
+			return (write(2, "Error: argv[5] = no positive number.\n", 38), 1);
 		table->times_has_to_eat = ft_atoi(argv[5]);
 	}
 	else
@@ -60,18 +61,16 @@ static int	init_table(t_ta *table, int argc, char **argv)
 	table->table_time = mili_count();
 	table->someoene_death = false;
 	printf("time in ms %ld\n", table->table_time);
-	return 0;
+	return (0);
 }
 
-static int init_philo(t_p *philo, t_ta *table)
+static int	init_philo(t_p *philo, t_ta *table)
 {
-	int i;
+	int		i;
 
 	i = 0;
-
 	while (i < table->number_of_philosophers)
 	{
-		
 		philo[i].id = i;
 		philo[i].table = table;
 		i++;
