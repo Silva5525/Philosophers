@@ -6,17 +6,17 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 14:15:01 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 15:03:19 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/// @brief This atoi version is based on ssize_t and returns 0, 
+/// @brief This atoi version is based on ssize_t long and returns 0, 
 /// if the value does not fit into the INT_MAX or INT_MIN.
 /// The point of this is that in case of an error for example 
 /// if the funktion which recives the number is unsigned it does 
-/// not become the highest num.. (ssize_t so i can easily reuse it)
+/// not become the highest num.. (ssize_t long so i can easily reuse it)
 /// @param str which is converted.
 /// @return the converted int value. Or 0 if the value does not fit into the 
 /// INT_MAX or INT_MIN.
@@ -57,17 +57,30 @@ int	ft_isdigit(char *d)
 	return (1);
 }
 
+/// @brief uses mili_count to get the actual time in miliseconds then
+/// subtracts tis with table_time where the table was createt to get
+/// the difference and return it for the time_stamp.
+/// @param philo struct for all informations.
+/// @return the difference between table_time and the actual time.
+long long	time_stamp(long long table_time)
+{
+	long long	diference;
+
+	diference = ((long long)mili_count() - table_time);
+	return (diference);
+}
+
 /// @brief  uses gettimeofday to get the actual time in miliseconds.
 /// Which means how many miliseconds have passed since start of 1970.
 /// @param clock struct timeval for holding the actual time.
 /// @return miliseconds passed since 1970.
-size_t	mili_count(void)
+long long	mili_count(void)
 {
 	struct timeval	clock;
-	size_t			miliseconds;
+	long long		miliseconds;
 
 	gettimeofday(&clock, NULL);
-	miliseconds = (clock.tv_usec / 1000) + (clock.tv_sec * 1000);
+	miliseconds = ((long long)clock.tv_usec / (long long)1000) + ((long long)clock.tv_sec * (long long)1000);
 	return (miliseconds);
 }
 
