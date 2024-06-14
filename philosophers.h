@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 13:50:22 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 14:07:20 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	*be_alive(void *link);
 /// then the print msg should say he eats, then pause the programm 
 /// while eating.count the meal and the time when he has eaten.
 /// unlock both threats. then make one program for sleeping and one
-/// for thinking. both nead to print the message and count the needet time for that.
+/// for thinking. both nead to print the message and count the needet
+/// time for that.
 /// then the main program should check if the philo
 /// has eaten enough. if not he should start again. if he has eaten

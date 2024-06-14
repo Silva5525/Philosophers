@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 13:52:04 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 14:15:01 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ size_t	mili_count(void)
 	return (miliseconds);
 }
 
+/// @brief desroys all mutexes and frees the memory used.
+/// @param philo the struct holder of each philo + table.
 void	free_destroy(t_p *philo)
 {
 	int	i;

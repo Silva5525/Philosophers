@@ -6,12 +6,18 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 13:52:25 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 14:19:16 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+/// @brief inits all Mutexes/Forks for later useage. The number of Forks is
+/// the number of Philosophs. Mutexes are tools to block the usage of 
+/// shared memory between different threads.
+/// @param table->forks is the mutex which get initialized here for each philo.
+/// @param table is a link to the struct table where the forks are placed.
+/// @return 0 if its succesfull and 1 if something went wrong.
 int	manifest_forks(t_ta *table)
 {
 	int	i;
@@ -73,6 +79,8 @@ static int	init_philo(t_p *philo, t_ta *table)
 	{
 		philo[i].id = i;
 		philo[i].table = table;
+		philo[i].l_hand = i + 1;
+		philo[i].r_hand = i;
 		i++;
 	}
 	if (manifest_forks(table) == 1)
@@ -96,11 +104,11 @@ int	main(int argc, char **argv)
 		if (init_philo(philo, &table) == 1)
 			return (1);
 		i = -1;
-		while (++i <= table.number_of_philosophers)
+		while (++i < table.number_of_philosophers)
 			if (pthread_create(&philo[i].live, NULL, be_alive, &philo[i]) != 0)
 				return (free_destroy(philo), 1);
 		// i = -1;
-		// while (++i <= table->number_of_philosophers)
+		// while (++i < table->number_of_philosophers)
 		// 	if (pthread_join(&philo[i].live, ) != 0)
 		// 		return (free_destroy(philo), 1);
 		free_destroy(philo);
