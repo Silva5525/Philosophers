@@ -6,25 +6,18 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 15:00:12 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 17:03:37 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-/// @brief inits all Mutexes/Forks for later useage. The number of Forks is
-/// the number of Philosophs. Mutexes are tools to block the usage of 
-/// shared memory between different threads.
-/// @param table->forks is the mutex which get initialized here for each philo.
-/// @param table is a link to the struct table where the forks are placed.
-/// @return 0 if its succesfull and 1 if something went wrong.
-int	manifest_forks(t_ta *table)
+int manifest_forks(t_ta *table)
 {
-	int	i;
+	int i;
 
 	i = 0;
-	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* table->number_of_philosophers);
+	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * table->number_of_philosophers);
 	if (!table->forks)
 		return (write(2, "Error: malloc forks failed.\n", 29), 1);
 	while (i < table->number_of_philosophers)
@@ -45,21 +38,21 @@ int	manifest_forks(t_ta *table)
 static int	init_table(t_ta *table, int argc, char **argv)
 {
 	if (ft_isdigit(argv[1]) || ft_atoi(argv[1]) < 1)
-		return (write(2, "Error: argv[1] = no positive number.\n", 38), 1);
+		return (write(2 , "Error: argv[1] = no positive number.\n", 38), 1);
 	table->number_of_philosophers = ft_atoi(argv[1]);
 	if (ft_isdigit(argv[2]) || ft_atoi(argv[2]) < 1)
-		return (write(2, "Error: argv[2] = no positive number.\n", 38), 1);
+		return (write(2 , "Error: argv[2] = no positive number.\n", 38), 1);
 	table->time_to_die = ft_atoi(argv[2]);
 	if (ft_isdigit(argv[3]) || ft_atoi(argv[3]) < 1)
-		return (write(2, "Error: argv[3] = no positive number.\n", 38), 1);
+		return (write(2 , "Error: argv[3] = no positive number.\n", 38), 1);
 	table->time_to_eat = ft_atoi(argv[3]);
 	if (ft_isdigit(argv[4]) || ft_atoi(argv[4]) < 1)
-		return (write(2, "Error: argv[4] = no positive number.\n", 38), 1);
+		return (write(2 , "Error: argv[4] = no positive number.\n", 38), 1);
 	table->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 	{
 		if (ft_isdigit(argv[5]) || ft_atoi(argv[5]) < 1)
-			return (write(2, "Error: argv[5] = no positive number.\n", 38), 1);
+			return (write(2 , "Error: argv[5] = no positive number.\n", 38), 1);
 		table->times_has_to_eat = ft_atoi(argv[5]);
 	}
 	else
@@ -67,24 +60,26 @@ static int	init_table(t_ta *table, int argc, char **argv)
 	table->table_time = mili_count();
 	table->someoene_death = false;
 	printf("time in ms %lld\n", table->table_time);
-	return (0);
+	return 0;
 }
 
-static int	init_philo(t_p *philo, t_ta *table)
+static int init_philo(t_p *philo, t_ta *table)
 {
-	int		i;
+	int i;
 
 	i = 0;
+
 	while (i < table->number_of_philosophers)
 	{
+		
 		philo[i].id = i;
 		philo[i].table = table;
-		philo[i].l_hand = i + 1;
-		philo[i].r_hand = i;
 		i++;
 	}
 	if (manifest_forks(table) == 1)
 		return (1);
+	if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
+		return (write(2, "Error: mutex init print_mutex failed.\n", 33), 1);
 	return (0);
 }
 
@@ -104,11 +99,11 @@ int	main(int argc, char **argv)
 		if (init_philo(philo, &table) == 1)
 			return (1);
 		i = -1;
-		while (++i < table.number_of_philosophers)
+		while (++i <= table.number_of_philosophers)
 			if (pthread_create(&philo[i].live, NULL, be_alive, &philo[i]) != 0)
 				return (free_destroy(philo), 1);
 		// i = -1;
-		// while (++i < table->number_of_philosophers)
+		// while (++i <= table->number_of_philosophers)
 		// 	if (pthread_join(&philo[i].live, ) != 0)
 		// 		return (free_destroy(philo), 1);
 		free_destroy(philo);

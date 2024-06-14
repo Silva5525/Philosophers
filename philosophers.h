@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 15:04:21 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 17:11:13 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,14 @@ typedef struct s_table
 {
 	int				number_of_philosophers;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_mutex;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				times_has_to_eat;
 	bool			someoene_death;
 	long long		table_time;
+	
 }	t_ta;
 
 /// @brief s_philo holds all the values which are unique to each Philosopher.
@@ -60,6 +62,7 @@ int			ft_isdigit(char *d);
 long long	time_stamp(long long table_time);
 long long	mili_count(void);
 void		free_destroy(t_p *philo);
+void		safe_print(t_p *philo, char *str);
 
 //////////////////// routines.c ////////////////////
 
