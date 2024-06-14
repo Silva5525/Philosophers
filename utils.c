@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 13:51:01 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 13:52:04 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 /// INT_MAX or INT_MIN.
 int	ft_atoi(const char *str)
 {
-	ssize_t n;
-	ssize_t minus;
+	ssize_t	n;
+	ssize_t	minus;
 
 	if (!str)
 		return (0);
@@ -41,7 +41,7 @@ int	ft_atoi(const char *str)
 	while (*str >= '0' && *str <= '9' && *str != '\0')
 		n = n * 10 + (*str++ - '0');
 	n *= minus;
-	if ((n > INT_MAX ) || (n < INT_MIN))
+	if ((n > INT_MAX) || (n < INT_MIN))
 		return (0);
 	return ((int)n);
 }
@@ -61,11 +61,11 @@ int	ft_isdigit(char *d)
 /// Which means how many miliseconds have passed since start of 1970.
 /// @param clock struct timeval for holding the actual time.
 /// @return miliseconds passed since 1970.
-size_t mili_count(void)
+size_t	mili_count(void)
 {
 	struct timeval	clock;
 	size_t			miliseconds;
-	
+
 	gettimeofday(&clock, NULL);
 	miliseconds = (clock.tv_usec / 1000) + (clock.tv_sec * 1000);
 	return (miliseconds);
@@ -73,7 +73,7 @@ size_t mili_count(void)
 
 void	free_destroy(t_p *philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < philo->table->number_of_philosophers)

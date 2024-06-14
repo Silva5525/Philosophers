@@ -6,15 +6,15 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 13:50:09 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 13:52:25 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int manifest_forks(t_ta *table)
+int	manifest_forks(t_ta *table)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
