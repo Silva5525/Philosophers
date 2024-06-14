@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/14 17:13:57 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/14 17:21:15 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	free_destroy(t_p *philo)
 		pthread_mutex_destroy(&philo->table->forks[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&philo->table->print_mutex);
 	free(philo->table->forks);
 	free(philo);
 }
