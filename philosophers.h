@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/16 14:02:44 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/16 18:39:34 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,22 +78,3 @@ void		*be_alive(void *link);
 // ◦ timestamp_in_ms X died
 
 // ./philo 5 800 200 200 10 actual problem only 4 philos are alive
-
-/// To do .. start threats for each philo. For evry second philo
-/// the first philo has to wait for the second philo to start.
-/// or the uneven philos take the right fork first and the even
-/// philos take the left fork first. so the first philo has to wait...
-/// for the last philo to start. 
-/// each fork represents a mutex. so i need a mutex for each hand of 
-/// each philo. print the message "id philo has taken a fork"..
-
-/// so i forker which takes t_p and t_ta as arguments. should decide if
-/// the philo is even or uneven. and then mutex the correct hand.
-/// print first msg. then the second hand should take a fork. print msg.
-/// then the print msg should say he eats, then pause the programm 
-/// while eating.count the meal and the time when he has eaten.
-/// unlock both threats. then make one program for sleeping and one
-/// for thinking. both nead to print the message and count the needet
-/// time for that.
-/// then the main program should check if the philo
-/// has eaten enough. if not he should start again. if he has eaten
