@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/17 12:05:10 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/17 15:31:40 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ static int init_philo(t_p *philo, t_ta *table)
 		philo[i].id = i;
 		philo[i].table = table;
 		philo[i].l_hand = i;
-		philo[i].r_hand = (i + 1) % table->number_of_philosophers;
-		
+		philo[i].r_hand = (i + 1);
+		if (philo[i].r_hand == table->number_of_philosophers)
+			philo[i].r_hand = 0;
+		philo[i].count_eat = 0;
 		i++;
 	}
 	if (manifest_forks(table) == 1)
