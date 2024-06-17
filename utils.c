@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/16 20:33:57 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/17 17:53:08 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ long long	time_stamp(long long table_time)
 {
 	long long	diference;
 
+	// printf("table_time %lld\n", table_time);
 	diference = ((long long)mili_count() - table_time + 1);
 	return (diference);
 }

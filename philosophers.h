@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/17 15:30:08 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/17 18:14:50 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_philosopher
 	int				r_hand;
 	int				l_hand;
 	int				count_eat;
+	long long		time_eaten;
 	pthread_t		live;
 	t_ta			*table;
 }	t_p;
@@ -67,6 +68,7 @@ void		safe_print(t_p *philo, char *str);
 
 //////////////////// routines.c ////////////////////
 
+void		usleep_wile_eat_sleep(t_p *philo, long long time);
 void		*be_alive(void *link);
 
 #endif
