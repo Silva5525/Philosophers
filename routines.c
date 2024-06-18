@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:08:55 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/18 17:10:54 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:05:48 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,9 @@ void	*be_alive(void *link)
 	t_p		*philo;
 
 	philo = (t_p *)link;
-	// printf("Initialized philosopher %d\n", philo->id + 1);
 	if (philo->id % 2 == 0)
-		usleep(philo->table->time_to_eat);
-	while (philo->table->times_has_to_eat != -42 && !(philo->count_eat
+		usleep(philo->table->time_to_eat * 1000);
+	while (!(philo->count_eat
 			== philo->table->times_has_to_eat)
 			&& philo->table->someoene_death == false)
 	{
@@ -69,6 +68,14 @@ void	*be_alive(void *link)
 		safe_print(philo, "has taken the right fork\n");
 		eat_sleep_repeat(philo);
 		safe_print(philo, "is thinking\n");
+		if (mili_count() - philo->time_eaten >= philo->table->time_to_die)
+				philo->table->someoene_death = true;
+			if (philo->table->someoene_death == true)
+			{
+				safe_print(philo, "died a very painfull and slow death so i see him in the terminal suffer.\n");
+				break ;
+			}
+		printf("Philosopher %d has eaten %d times\n", philo->id + 1, philo->count_eat);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/18 17:33:13 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:08:44 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,19 @@ int	ft_atoi(const char *str)
 	return ((int)n);
 }
 
-/// @brief checks if d is an digital char.
+/// @brief checks if d is an digital char. 
+/// (no negative numbers too)
 /// @param d char representet with an int
 /// @return (1) if true (0) if wrong
 int	ft_isdigit(char *d)
 {
-	while (*d++)
+	while (*d)
+	{
 		if (!(*d >= '0' && *d <= '9'))
 			return (0);
+		d++;
+	
+	}
 	return (1);
 }
 
@@ -78,10 +83,7 @@ void safe_print(t_p *philo, char *str)
 /// @return the difference between table_time and the actual time.
 long long	time_stamp(long long table_time)
 {
-	long long	diference;
-
-	diference = ((long long)mili_count() - table_time + 1);
-	return (diference);
+	return (((long long)mili_count() - table_time + 1));
 }
 
 /// @brief  uses gettimeofday to get the actual time in miliseconds.
