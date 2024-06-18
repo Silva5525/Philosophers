@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/18 20:08:44 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:16:47 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,10 @@ void safe_print(t_p *philo, char *str)
 /// @return the difference between table_time and the actual time.
 long long	time_stamp(long long table_time)
 {
-	return (((long long)mili_count() - table_time + 1));
+	long long	diference;
+
+	diference = ((long long)mili_count() - table_time + 1);
+	return (diference);
 }
 
 /// @brief  uses gettimeofday to get the actual time in miliseconds.

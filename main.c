@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/18 20:04:42 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:52:02 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static int init_philo(t_p *philo, t_ta *table)
 	return (0);
 }
 
+
 int	main(int argc, char **argv)
 {
 	t_p		*philo;
@@ -110,19 +111,9 @@ int	main(int argc, char **argv)
 				return (free_destroy(philo), 1);
 			i++;
 		}
+		
+		death_loop(philo);
 		i = 0;
-		// while (i < table.number_of_philosophers)
-		// {
-		// 	if (mili_count() - philo[i].time_eaten >= philo->table->time_to_die)
-		// 		philo->table->someoene_death = true;
-		// 	if (philo->table->someoene_death == true)
-		// 	{
-		// 		safe_print(philo, "died a very painfull and slow death so i see him in the terminal suffer.\n");
-		// 		break ;
-		// 	}
-		// 	i++;
-		// }
-		// i = 0;
 		while (i < table.number_of_philosophers && table.someoene_death == false)
 		{
 			if (pthread_join(philo[i].live, NULL) != 0)

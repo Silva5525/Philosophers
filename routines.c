@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:08:55 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/18 20:05:48 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:56:06 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void eat_sleep_repeat(t_p *philo)
 		}
 		pthread_mutex_unlock(&philo->table->forks[philo->r_hand]);
 		safe_print(philo, "is sleeping\n");
-		usleep(philo->table->time_to_sleep * 1000);
+		usleep_wile_eat_sleep(philo, philo->table->time_to_sleep);
 }
 
 /// @brief 
@@ -59,7 +59,7 @@ void	*be_alive(void *link)
 
 	philo = (t_p *)link;
 	if (philo->id % 2 == 0)
-		usleep(philo->table->time_to_eat * 1000);
+		usleep_wile_eat_sleep(philo, philo->table->time_to_eat);
 	while (!(philo->count_eat
 			== philo->table->times_has_to_eat)
 			&& philo->table->someoene_death == false)
@@ -68,14 +68,30 @@ void	*be_alive(void *link)
 		safe_print(philo, "has taken the right fork\n");
 		eat_sleep_repeat(philo);
 		safe_print(philo, "is thinking\n");
-		if (mili_count() - philo->time_eaten >= philo->table->time_to_die)
+	}
+	return (NULL);
+}
+
+void	death_loop(t_p *philo)
+{
+	int	i;
+
+	while (1)
+	{
+		i = 0;
+		while (i < philo->table->number_of_philosophers)
+		{
+			if (mili_count() - philo[i].time_eaten >= philo->table->time_to_die)
 				philo->table->someoene_death = true;
 			if (philo->table->someoene_death == true)
 			{
-				safe_print(philo, "died a very painfull and slow death so i see him in the terminal suffer.\n");
+				safe_print(&philo[i], "died a very painfull and slow death so i see him in the terminal suffer.\n");
 				break ;
 			}
-		printf("Philosopher %d has eaten %d times\n", philo->id + 1, philo->count_eat);
+			i++;
+		}
+		if (philo->table->someoene_death == true)
+			break ;
+		usleep(1000);
 	}
-	return (NULL);
 }
