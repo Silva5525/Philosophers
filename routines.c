@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:08:55 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/17 18:39:19 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/18 17:10:54 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,23 @@ void	usleep_wile_eat_sleep(t_p *philo, long long time)
 	}
 }
 
+static void eat_sleep_repeat(t_p *philo)
+{
+	if (philo->table->number_of_philosophers >= 2)
+		{
+			pthread_mutex_lock(&philo->table->forks[philo->l_hand]);
+			safe_print(philo, "has taken the left fork\n");
+			safe_print(philo, "is eating.\n");
+			usleep_wile_eat_sleep(philo, philo->table->time_to_eat);
+			philo->count_eat++;
+			philo->time_eaten = mili_count();
+			pthread_mutex_unlock(&philo->table->forks[philo->l_hand]);
+		}
+		pthread_mutex_unlock(&philo->table->forks[philo->r_hand]);
+		safe_print(philo, "is sleeping\n");
+		usleep(philo->table->time_to_sleep * 1000);
+}
+
 /// @brief 
 /// @param link the void pointer to the t_p philo
 /// @return 
@@ -50,22 +67,7 @@ void	*be_alive(void *link)
 	{
 		pthread_mutex_lock(&philo->table->forks[philo->r_hand]);
 		safe_print(philo, "has taken the right fork\n");
-		if (philo->id > 1)
-		{
-			pthread_mutex_lock(&philo->table->forks[philo->l_hand]);
-			safe_print(philo, "has taken the left fork\n");
-			safe_print(philo, "is eating.\n");
-			usleep_wile_eat_sleep(philo, philo->table->time_to_eat);
-			philo->count_eat++;
-			philo->time_eaten = mili_count();
-			if (philo->time_eaten
-				- philo->table->table_time > philo->table->time_to_die)
-				philo->table->someoene_death = true;
-			pthread_mutex_unlock(&philo->table->forks[philo->l_hand]);
-		}
-		pthread_mutex_unlock(&philo->table->forks[philo->r_hand]);
-		safe_print(philo, "is sleeping\n");
-		usleep(philo->table->time_to_sleep * 1000);
+		eat_sleep_repeat(philo);
 		safe_print(philo, "is thinking\n");
 	}
 	return (NULL);

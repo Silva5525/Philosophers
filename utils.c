@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/17 17:53:08 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/18 17:33:13 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,18 @@ long long	time_stamp(long long table_time)
 {
 	long long	diference;
 
-	// printf("table_time %lld\n", table_time);
 	diference = ((long long)mili_count() - table_time + 1);
 	return (diference);
 }
 
 /// @brief  uses gettimeofday to get the actual time in miliseconds.
 /// Which means how many miliseconds have passed since start of 1970.
+/// calculation for better understanding: 
+/// tv_sec = 1623456789 (seconds since 1970)
+/// tv_usec = 123456 (microseconds since the last second)
+/// 1623456789 * 1000 = 1623456789000
+/// 123456 / 1000 = 123.456 (rounded down to 123)
+/// 1623456789000 + 123 = 1623456789123 (miliseconds since 1970)
 /// @param clock struct timeval for holding the actual time.
 /// @return miliseconds passed since 1970.
 long long	mili_count(void)
