@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:08:55 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/21 16:40:56 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/21 17:28:39 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	safe_print(t_p *philo, char *str)
 	if (print == true && philo->table->someoene_death == false)
 	{
 		pthread_mutex_lock(&philo->table->print_mutex);
-		printf("%lld Philosopher %d %s",
+		printf("%lld %d %s",
 			time_stamp(philo->table->table_time), philo->id + 1, str);
 		print = true;
 		pthread_mutex_unlock(&philo->table->print_mutex);
@@ -64,8 +64,8 @@ static void	eat_sleep_repeat(t_p *philo)
 		&& philo->table->someoene_death == false)
 	{
 		pthread_mutex_lock(&philo->table->forks[philo->l_hand]);
-		safe_print(philo, "has taken the left fork\n");
-		safe_print(philo, "is eating.\n");
+		safe_print(philo, "has taken a fork\n");
+		safe_print(philo, "is eating\n");
 		usleep_wile_eat_sleep(philo, philo->table->time_to_eat);
 		philo->count_eat++;
 		philo->time_eaten = mili_count();
@@ -90,13 +90,13 @@ void	*be_alive(void *link)
 
 	philo = (t_p *)link;
 	if (philo->id % 2 == 0)
-		usleep_wile_eat_sleep(philo, philo->table->time_to_eat);
+		usleep(200);
 	while (!(philo->count_eat
 			== philo->table->times_has_to_eat)
 		&& philo->table->someoene_death == false)
 	{
 		pthread_mutex_lock(&philo->table->forks[philo->r_hand]);
-		safe_print(philo, "has taken the right fork\n");
+		safe_print(philo, "has taken a fork\n");
 		eat_sleep_repeat(philo);
 		safe_print(philo, "is thinking\n");
 	}
@@ -104,9 +104,10 @@ void	*be_alive(void *link)
 }
 
 /// @brief loops until someone dies. It checks if the time_to_die has passed
-/// and if so it sets the someoene_death to true and if so it will
-/// Print the died message. It uses usleep so it does not overuse the cpu.
+/// and if so it sets the someoene_death to true. Prints the died message and 
+/// waits wit usleep for better precision.
 /// @param philo struct of the philosopher and the table.
+/// @return 0
 int	death_loop(t_p *philo)
 {
 	int	i;
@@ -121,7 +122,7 @@ int	death_loop(t_p *philo)
 				philo->table->someoene_death = true;
 			if (philo->table->someoene_death == true)
 			{
-				printf("%lld Philosopher %d died.\n",
+				printf("%lld %d died\n",
 					time_stamp(philo->table->table_time), philo->id + 1);
 				return (0);
 			}
@@ -129,7 +130,7 @@ int	death_loop(t_p *philo)
 		}
 		if (philo->table->someoene_death == true)
 			return (0);
-		usleep(1000);
+		usleep(100);
 	}
 	return (0);
 }
