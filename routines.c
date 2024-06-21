@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:08:55 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/21 17:28:39 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/21 19:43:10 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	safe_print(t_p *philo, char *str)
 
 	print = true;
 	usleep(100);
-	if (print == true && philo->table->someoene_death == false)
+	if (print == true && philo->table->someoene_death == false
+		&& !(philo->count_eat == philo->table->times_has_to_eat))
 	{
 		pthread_mutex_lock(&philo->table->print_mutex);
 		printf("%lld %d %s",
@@ -90,7 +91,7 @@ void	*be_alive(void *link)
 
 	philo = (t_p *)link;
 	if (philo->id % 2 == 0)
-		usleep(200);
+		usleep(500);
 	while (!(philo->count_eat
 			== philo->table->times_has_to_eat)
 		&& philo->table->someoene_death == false)
@@ -120,6 +121,8 @@ int	death_loop(t_p *philo)
 		{
 			if (mili_count() - philo[i].time_eaten >= philo->table->time_to_die)
 				philo->table->someoene_death = true;
+			if (philo->count_eat == philo->table->times_has_to_eat)
+				return (0);
 			if (philo->table->someoene_death == true)
 			{
 				printf("%lld %d died\n",

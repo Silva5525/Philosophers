@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/21 16:29:55 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/21 19:40:01 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	init_table(t_ta *table, int argc, char **argv)
 		table->times_has_to_eat = ft_atoi(argv[5]);
 	}
 	else
-		table->times_has_to_eat = -42;
+		table->times_has_to_eat = -1;
 	table->table_time = mili_count();
 	table->someoene_death = false;
 	printf("time in ms %lld\n", table->table_time);
