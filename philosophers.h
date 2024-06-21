@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/18 20:54:00 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:41:56 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_table
 	int				times_has_to_eat;
 	bool			someoene_death;
 	long long		table_time;
-	
 }	t_ta;
 
 /// @brief s_philo holds all the values which are unique to each Philosopher.
@@ -70,15 +69,6 @@ void		safe_print(t_p *philo, char *str);
 
 void		usleep_wile_eat_sleep(t_p *philo, long long time);
 void		*be_alive(void *link);
-void		death_loop(t_p *philo);
+int			death_loop(t_p *philo);
 
 #endif
-
-// Any state change of a philosopher must be formatted as follows:
-// ◦ timestamp_in_ms X has taken a fork
-// ◦ timestamp_in_ms X is eating
-// ◦ timestamp_in_ms X is sleeping
-// ◦ timestamp_in_ms X is thinking
-// ◦ timestamp_in_ms X died
-
-// ./philo 5 800 200 200 10 actual problem only 4 philos are alive

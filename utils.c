@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/18 20:16:47 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/21 13:56:34 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,23 +57,8 @@ int	ft_isdigit(char *d)
 		if (!(*d >= '0' && *d <= '9'))
 			return (0);
 		d++;
-	
 	}
 	return (1);
-}
-
-void safe_print(t_p *philo, char *str)
-{
-	bool print;
-	
-	print = true;
-	while (print == true)
-	{
-		pthread_mutex_lock(&philo->table->print_mutex);
-		printf("%lld Philosopher %d %s", time_stamp(philo->table->table_time), philo->id + 1, str);
-		print = false;
-		pthread_mutex_unlock(&philo->table->print_mutex);
-	}
 }
 
 /// @brief uses mili_count to get the actual time in miliseconds then
@@ -105,7 +90,8 @@ long long	mili_count(void)
 	long long		miliseconds;
 
 	gettimeofday(&clock, NULL);
-	miliseconds = ((long long)clock.tv_usec / (long long)1000) + ((long long)clock.tv_sec * (long long)1000);
+	miliseconds = ((long long)clock.tv_usec / (long long)1000)
+		+ ((long long)clock.tv_sec * (long long)1000);
 	return (miliseconds);
 }
 
