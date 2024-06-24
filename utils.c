@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 17:05:07 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/21 17:29:15 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:20:59 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,13 @@ int	ft_isdigit(char *d)
 /// the difference and return it for the time_stamp.
 /// @param philo struct for all informations.
 /// @return the difference between table_time and the actual time.
-long long	time_stamp(long long table_time)
+long long	time_stamp(t_p *philo)
 {
 	long long	diference;
 
-	diference = ((long long)mili_count() - table_time);
+	pthread_mutex_lock(&philo->table->print_mutex2);
+	diference = ((long long)mili_count() - philo->table->table_time);
+	pthread_mutex_unlock(&philo->table->print_mutex2);
 	return (diference);
 }
 
@@ -104,10 +106,19 @@ void	free_destroy(t_p *philo)
 	i = 0;
 	while (i < philo->table->number_of_philosophers)
 	{
+		if (philo[i].live != 0)
+			pthread_join(philo[i].live, NULL);
+		i++;
+	}
+	i = 0;
+	while (i < philo->table->number_of_philosophers)
+	{
 		pthread_mutex_destroy(&philo->table->forks[i]);
 		i++;
 	}
 	pthread_mutex_destroy(&philo->table->print_mutex);
+	pthread_mutex_destroy(&philo->table->print_mutex2);
 	free(philo->table->forks);
 	free(philo);
+	philo = NULL;
 }

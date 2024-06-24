@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:08:55 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/21 19:43:10 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:07:46 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	safe_print(t_p *philo, char *str)
 	{
 		pthread_mutex_lock(&philo->table->print_mutex);
 		printf("%lld %d %s",
-			time_stamp(philo->table->table_time), philo->id + 1, str);
+			time_stamp(philo), philo->id + 1, str);
 		print = true;
 		pthread_mutex_unlock(&philo->table->print_mutex);
 	}
@@ -44,14 +44,14 @@ void	usleep_wile_eat_sleep(t_p *philo, long long time)
 	long long	start;
 	long long	end;
 
-	start = time_stamp(philo->table->table_time);
+	start = time_stamp(philo);
 	end = start;
 	while (end - start < time)
 	{
 		if (philo->table->someoene_death == true)
 			break ;
 		usleep(100);
-		end = time_stamp(philo->table->table_time);
+		end = time_stamp(philo);
 	}
 }
 
@@ -126,7 +126,7 @@ int	death_loop(t_p *philo)
 			if (philo->table->someoene_death == true)
 			{
 				printf("%lld %d died\n",
-					time_stamp(philo->table->table_time), philo->id + 1);
+					time_stamp(philo), philo->id + 1);
 				return (0);
 			}
 			i++;

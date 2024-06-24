@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/21 19:40:01 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:26:51 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ static int	init_philo(t_p *philo, t_ta *table)
 	if (manifest_forks(table) == 1)
 		return (1);
 	if (pthread_mutex_init(&table->print_mutex, NULL) != 0)
-		return (write(2, "Error: pthread_mutex_init failed.\n", 33), 1);
+		return (write(2, "Error: pthread_mutex_init failed.\n", 35), 1);
+	if (pthread_mutex_init(&table->print_mutex2, NULL) != 0)
+		return (write(2, "Error: pthread_mutex_init2 failed.\n", 36), 1);
 	return (0);
 }
 
@@ -114,18 +116,16 @@ static int	philosophy_so_deadly(t_p *philo)
 			return (free_destroy(philo), 1);
 		i++;
 	}
-	if ((death_loop(philo)) == 0)
-		return (free_destroy(philo), 0);
-	i = 0;
-	while (i < philo->table->number_of_philosophers
-		&& philo->table->someoene_death == false)
-	{
-		if (pthread_join(philo[i].live, NULL) != 0)
-			return (free_destroy(philo), 1);
-		i++;
-	}
+	death_loop(philo);
 	return (free_destroy(philo), 0);
 }
+
+/// @brief checks for leaks
+// void leak_check(void)
+// {
+// 	system("leaks philo");
+// }
+// use at start of main atexit(leak_check);
 
 /// @brief Philosopher simulation. The main checks the arguments,
 /// then initializes the table and the Philosophers. Then it starts
