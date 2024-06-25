@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/24 19:26:51 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/25 13:18:03 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static int	philosophy_so_deadly(t_p *philo)
 	return (free_destroy(philo), 0);
 }
 
-/// @brief checks for leaks
+// / @brief checks for leaks
 // void leak_check(void)
 // {
 // 	system("leaks philo");
