@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/26 13:47:31 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/26 15:02:43 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,14 @@ typedef struct s_philosopher
 	t_ta			*table;
 }	t_p;
 
+///////////////////// philo.c ////////////////////
+int			philosophy_so_deadly(t_p *philo);
+void		*be_alive(void *link);
+int			philosophy_so_deadly(t_p *philo);
+int			init_philo(t_p *philo, t_ta *table);
+int			init_table(t_ta *table, int argc, char **argv);
+int			manifest_forks(t_ta *table);
+
 //////////////////// utils.c ////////////////////
 int			ft_atoi(const char *str);
 int			ft_isdigit(char *d);
@@ -70,7 +78,8 @@ void		safe_print(t_p *philo, char *str);
 //////////////////// routines.c ////////////////////
 
 void		usleep_wile_eat_sleep(t_p *philo, long long time);
-void		*be_alive(void *link);
 int			death_loop(t_p *philo);
+int			eat_sleep_repeat(t_p *philo);
+void		safe_print(t_p *philo, char *str);
 
 #endif

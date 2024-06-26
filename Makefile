@@ -6,7 +6,7 @@
 #    By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 16:56:06 by wdegraf           #+#    #+#              #
-#    Updated: 2024/06/26 14:28:08 by wdegraf          ###   ########.fr        #
+#    Updated: 2024/06/26 15:11:59 by wdegraf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ CFLAGS	:= -Wall -Werror -Wextra -pthread -g
 
 HEADERS	:= -I ./include
 
-SRCS	:= main.c utils.c routines.c 
+SRCS	:= main.c utils.c routines.c philo.c
 
 OBJS	:= ${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:08:55 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/26 14:26:00 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/26 15:07:33 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	usleep_wile_eat_sleep(t_p *philo, long long time)
 /// happens here. only interesting part is the usleep_wile_eat_sleep function.
 /// so check that out.
 /// @param philo struct of the philosopher and the table.
-static int	eat_sleep_repeat(t_p *philo)
+int	eat_sleep_repeat(t_p *philo)
 {
 	if (philo->table->number_of_philosophers >= 2)
 	{
@@ -75,8 +75,8 @@ static int	eat_sleep_repeat(t_p *philo)
 		safe_print(philo, "has taken a fork\n");
 		safe_print(philo, "is eating\n");
 		usleep_wile_eat_sleep(philo, philo->table->time_to_eat);
-		philo->count_eat++;
 		pthread_mutex_lock(&philo->table->print_mutex);
+		philo->count_eat++;
 		philo->time_eaten = mili_count();
 		pthread_mutex_unlock(&philo->table->print_mutex);
 		pthread_mutex_unlock(&philo->table->forks[philo->l_hand]);
@@ -91,32 +91,34 @@ static int	eat_sleep_repeat(t_p *philo)
 	return (0);
 }
 
-/// @brief this funktion is the initial function for the threads.
-/// it takes the void pointer to the t_p philo and starts the loop.
-/// if the philo has an odd id it waits until the other philosophers
-/// have taken their forks.
-/// @param link the void pointer to the t_p philo
-/// @return NULL
-void	*be_alive(void *link)
+/// @brief splits the death_loop in the part which checks in the loop
+/// evry philo if he died someone_death is true or if 
+/// count_eat = times_has_to_eat.
+/// @param philo struct of the philosopher and the table.
+/// @return 1 if it has to stop 0 if loop goes on.
+static int	eat_or_die(t_p *philo)
 {
-	t_p		*philo;
+	int	i;
 
-	philo = (t_p *)link;
-	if (philo->id % 2 == 0)
-		usleep(500);
-	while (pthread_mutex_lock(&philo->table->print_mutex)
-		, !(philo->count_eat == philo->table->times_has_to_eat))
+	i = 0;
+	while (i < philo->table->number_of_philosophers)
 	{
+		pthread_mutex_lock(&philo->table->print_mutex);
+		if (philo->count_eat == philo->table->times_has_to_eat)
+			return (pthread_mutex_unlock(&philo->table->print_mutex), 1);
 		if (philo->table->someoene_death == true)
-			return (pthread_mutex_unlock(&philo->table->print_mutex), NULL);
+			return (pthread_mutex_unlock(&philo->table->print_mutex), 1);
+		if (mili_count() - philo[i].time_eaten >= philo->table->time_to_die)
+		{
+			philo->table->someoene_death = true;
+			printf("%lld %d died\n",
+				time_stamp(philo), philo->id + 1);
+			return (pthread_mutex_unlock(&philo->table->print_mutex), 1);
+		}
 		pthread_mutex_unlock(&philo->table->print_mutex);
-		pthread_mutex_lock(&philo->table->forks[philo->r_hand]);
-		safe_print(philo, "has taken a fork\n");
-		eat_sleep_repeat(philo);
-		safe_print(philo, "is thinking\n");
+		i++;
 	}
-	pthread_mutex_unlock(&philo->table->print_mutex);
-	return (NULL);
+	return (0);
 }
 
 /// @brief loops until someone dies. It checks if the time_to_die has passed
@@ -126,30 +128,12 @@ void	*be_alive(void *link)
 /// @return 0
 int	death_loop(t_p *philo)
 {
-	int	i;
-
 	while (pthread_mutex_lock(&philo->table->print_mutex),
 		philo->table->someoene_death == false)
 	{
 		pthread_mutex_unlock(&philo->table->print_mutex);
-		i = 0;
-		while (i < philo->table->number_of_philosophers)
-		{
-			pthread_mutex_lock(&philo->table->print_mutex);
-			if (philo->count_eat == philo->table->times_has_to_eat)
-				return (pthread_mutex_unlock(&philo->table->print_mutex), 0);
-			if (philo->table->someoene_death == true)
-				return (pthread_mutex_unlock(&philo->table->print_mutex), 0);
-			if (mili_count() - philo[i].time_eaten >= philo->table->time_to_die)
-			{
-				philo->table->someoene_death = true;
-				printf("%lld %d died\n",
-					time_stamp(philo), philo->id + 1);
-				return (pthread_mutex_unlock(&philo->table->print_mutex), 0);
-			}
-			pthread_mutex_unlock(&philo->table->print_mutex);
-			i++;
-		}
+		if (eat_or_die(philo) != 0)
+			return (0);
 		pthread_mutex_lock(&philo->table->print_mutex);
 		if (philo->table->someoene_death == true)
 			return (pthread_mutex_unlock(&philo->table->print_mutex), 0);
