@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/25 13:18:03 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/26 14:13:43 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ static int	init_philo(t_p *philo, t_ta *table)
 		return (write(2, "Error: pthread_mutex_init failed.\n", 35), 1);
 	if (pthread_mutex_init(&table->print_mutex2, NULL) != 0)
 		return (write(2, "Error: pthread_mutex_init2 failed.\n", 36), 1);
+	if (pthread_mutex_init(&table->print_mutex3, NULL) != 0)
+		return (write(2, "Error: pthread_mutex_init3 failed.\n", 36), 1);
 	return (0);
 }
 
@@ -109,13 +111,16 @@ static int	philosophy_so_deadly(t_p *philo)
 	int	i;
 
 	i = 0;
-	while (i < philo->table->number_of_philosophers
+	while (pthread_mutex_lock(&philo->table->print_mutex)
+		, i < philo->table->number_of_philosophers
 		&& philo->table->someoene_death == false)
 	{
+		pthread_mutex_unlock(&philo->table->print_mutex);
 		if (pthread_create(&philo[i].live, NULL, be_alive, &philo[i]) != 0)
 			return (free_destroy(philo), 1);
 		i++;
 	}
+	pthread_mutex_unlock(&philo->table->print_mutex);
 	death_loop(philo);
 	return (free_destroy(philo), 0);
 }

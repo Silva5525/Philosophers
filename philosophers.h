@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:57:19 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/24 19:10:19 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/26 13:47:31 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	print_mutex2;
+	pthread_mutex_t	print_mutex3;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;

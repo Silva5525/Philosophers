@@ -6,7 +6,7 @@
 #    By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/19 16:56:06 by wdegraf           #+#    #+#              #
-#    Updated: 2024/06/12 19:26:12 by wdegraf          ###   ########.fr        #
+#    Updated: 2024/06/26 14:28:08 by wdegraf          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC		:= cc
 CFLAGS	:= -Wall -Werror -Wextra -pthread -g 
 # -Wunreachable-code 
 #-fsanitize=address -Ofast 
+#-fsanitize=thread
 # valgrind --leak-check=full ./philo 2 200 200 200
 # valgrind --tool=helgrind ./philo 2 200 200 200 # for thread errors in /.philo
 
