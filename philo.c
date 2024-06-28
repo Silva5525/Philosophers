@@ -6,7 +6,7 @@
 /*   By: wdegraf <wdegraf@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 16:55:41 by wdegraf           #+#    #+#             */
-/*   Updated: 2024/06/26 14:47:53 by wdegraf          ###   ########.fr       */
+/*   Updated: 2024/06/28 13:53:04 by wdegraf          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	manifest_forks(t_ta *table)
 	table->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
 			* table->number_of_philosophers);
 	if (!table->forks)
-		return (write(2, "Error: malloc table->forks failed.\n", 29), 1);
+		return (write(2, "Error: malloc table->forks failed.\n", 36), 1);
 	while (i < table->number_of_philosophers)
 	{
 		if (pthread_mutex_init(&table->forks[i], NULL) != 0)
