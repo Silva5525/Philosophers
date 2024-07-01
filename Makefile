@@ -13,6 +13,7 @@
 NAME	:= philo
 CC		:= cc
 CFLAGS	:= -Wall -Werror -Wextra -pthread -g 
+#| grep -o "eating" | wc -l
 # -Wunreachable-code 
 #-fsanitize=address -Ofast 
 #-fsanitize=thread
